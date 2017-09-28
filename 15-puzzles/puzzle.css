@@ -1,0 +1,44 @@
+body{
+	text-align: center;
+}
+
+#start,#fix,#change{
+	background-color: rgb(0,192,255);
+	height: 30px;
+	width: 100px;
+	color: white;
+	padding: 5px;
+	display: inline-block;
+}
+
+
+#game{
+	width: 400px;
+	height: 400px;
+	margin: auto;
+	display: inline-block;
+}
+
+.pice,.blank{
+	width: 88px;
+	height: 88px;
+	display: inline-block;
+	/*border: solid 1px gray;*/
+	margin-bottom: -3px;
+	transition: transform 0.8s;
+}
+
+#steps{
+	width: 100px;
+	height: 30px;
+	border: solid black 1px;
+	margin: auto;
+}
+
+#pic{
+	width: 250px;
+	height: 250px;
+	background: url(penda.png);
+	background-size: 250px 250px;
+	display: inline-block;
+}
