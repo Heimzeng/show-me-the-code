@@ -1,3 +1,4 @@
+#-*- coding: UTF-8 -*- 
 from splinter.browser import Browser
 from time import sleep
 import traceback
