@@ -16,7 +16,17 @@ And use
 $ git config --list
 ```
 to show the config
-And we clone with this
+And we create SSH Key with
+```Bash
+$ ssh-keygen -t rsa -C "youremail@example.com"
+```
+get public SSH Key with 
+```Bash
+$ cd ~/.ssh
+$ vi id_rsa.pub
+```
+to get the public key to place in your github
+And now we can clone with this
 ```Bash
 $ git clone git@github.com:Heimzeng/Git-Learning.git
 ```
