@@ -35,7 +35,12 @@ b.reload()
 sleep(1)
 count = 0
 while b.url == ticket_url:
-    b.find_by_text(u"查询").click()
+
+    if b.find_by_text(u"查询"):
+    	b.find_by_text(u"查询").click()
+    else:
+    	reload()
+    	continue
     sleep(3)
     if b.find_by_text(u"预订"):
         b.find_by_text(u"预订")[32].click()
