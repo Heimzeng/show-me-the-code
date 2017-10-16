@@ -35,3 +35,12 @@ Use
 $ git add -A
 $ git commit
 ```
+Add a new branch and push to github
+```Bash
+$ git checkout -b branchtest
+$ git remote add branchtest git@github.com:Heimzeng/Git-Learning.git
+```
+Switch to master branch
+```Bash
+$ git checkout master
+```
