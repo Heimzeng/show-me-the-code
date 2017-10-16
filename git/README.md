@@ -44,3 +44,12 @@ Switch to master branch
 ```Bash
 $ git checkout master
 ```
+Delete a remote branch
+```Bash
+$ git push origin --delete branchtest
+```
+Delete a local branch
+```Bash
+$ git branch -d branchtest
+$ git branch -D branchtest #force
+```
