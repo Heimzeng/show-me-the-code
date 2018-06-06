@@ -1,12 +1,15 @@
 import pygame,sys
 from pygame.locals import *
 from random import randrange
+import random
 from math import *
 
 SCREEN_SIZE = (400,400)
-BFS_ENABLE = False
+BFS_ENABLE = True
 DFS_ENABLE = False
 ASTAR_ENABLE = False
+
+
 
 class snake():
     """
@@ -29,15 +32,20 @@ class snake():
             index = len(self.s) - 1
             while True:
                 if index == 0:
-                    break;
+                    break
                 self.s[index] = self.s[index-1]
-                index -= 1;
+                index -= 1
             self.s[0] = (self.s[0][0]+self.direction[0],self.s[0][1]+self.direction[1])
-    def grow(self):
+    def grow(self, last1_tail, last2_tail):
+        '''
         last = self.s[len(self.s)-1]
         last2 = self.s[len(self.s)-2]
         position = (last[0]*2-last2[0],last[1]*2-last2[1])
         self.s.append(position)
+        '''
+        self.s.append(last2_tail)
+        self.s.append(last1_tail)
+
     def getDirection(self):
         if self.direction == (0,-1):
             return 'Up'
@@ -75,30 +83,34 @@ run = True
 
 def getNeibor(node):
     nodelist = []
+
     if node[0]-2 > 0:
-        nodelist.append((node[0]-2,node[1]))
+        r = random.randint(0, len(nodelist))
+        nodelist.insert(r, (node[0]-2,node[1]))
     if node[0]+2 < SCREEN_SIZE[0]/10:
-        nodelist.append((node[0]+2,node[1]))
+        r = random.randint(0, len(nodelist))
+        nodelist.insert(r, (node[0]+2,node[1]))
     if node[1]-2 > 0:
-        nodelist.append((node[0],node[1]-2))
+        r = random.randint(0, len(nodelist))
+        nodelist.insert(r, (node[0],node[1]-2))
     if node[1]+2 < SCREEN_SIZE[1]/10:
-        nodelist.append((node[0],node[1]+2))
+        r = random.randint(0, len(nodelist))
+        nodelist.insert(r, (node[0],node[1]+2))
     return nodelist
 
-def BFS(head,body):
+def BFS(head,body,end):
     queue = []
     visited = []
     path = []
     parent = [[(0,0) for i in range(1,int(SCREEN_SIZE[0]))]for j in range(1,int(SCREEN_SIZE[1]))]
     queue.append(head)
-    visited.append(head)
-    if head == sk.s[0]:
-        end = fd.getPosition()
-    elif head == fd.getPosition():
+    #visited.append(head)
+    if head == fd.getPosition():
         head = body[0]
-        end = body[len(body)-1]
-        body = body[0:len(body)-1]
-        print ('body',body)
+        end = body[-1]
+        body = body[:-1]
+    if end == sk.s[-1]:
+        body = body[:-1]
     while queue!=[]:
         current = queue[0]
         if (current == end):
@@ -108,9 +120,30 @@ def BFS(head,body):
                 path.insert(0,current)
             path.insert(0,parent[current[0]][current[1]])
             break
+        currentcopy = (current[0], current[1])
+        path_maybe = []
+        if currentcopy != head:
+            path_maybe.insert(0,currentcopy)
+            while parent[currentcopy[0]][currentcopy[1]]!=head:
+                currentcopy = parent[currentcopy[0]][currentcopy[1]]
+                path_maybe.insert(0,currentcopy)
+            path_maybe.insert(0,parent[currentcopy[0]][currentcopy[1]])
+        level = len(path_maybe) - 1
+        print(head, end, fd.getPosition(), path_maybe)
+
+        newpath = path_maybe[::-1]
+        newnewpath = []
+        for i in range(len(newpath)-1):
+            newnewpath.append(newpath[i])
+            newnewpath.append((int((newpath[i][0] + newpath[i+1][0] )/ 2), int((newpath[i][1] + newpath[i+1][1] )/ 2)))
+        if len(newpath) > 0:
+            newnewpath.append(newpath[-1])
+        newnewpath[len(newnewpath):] = body[1:]
+        newbody = newnewpath[0:(len(body))]
+
         neibor = getNeibor(current)
         for items in neibor:
-            if items not in body and items not in visited:
+            if items not in newbody and items not in visited:
                 queue.append(items)
                 visited.append(items)
                 parent[items[0]][items[1]] = current
@@ -173,27 +206,47 @@ def AStar():
         parent[neibor[index][0]][neibor[index][1]] = current
         queue.pop(0)
     return path
+numbercount = 0
+istracetail = False
+target = []
 def getPath():
     if BFS_ENABLE:
-        path = BFS(sk.s[0],sk.s)
+        path = BFS(sk.s[0],sk.s, fd.getPosition())
     elif DFS_ENABLE:
         path = DFS(sk.s[0],[sk.s[0]],[[(0,0) for i in range(1,int(SCREEN_SIZE[0]))]for j in range(1,int(SCREEN_SIZE[1]))])
     elif ASTAR_ENABLE:
         path = AStar()
     if ASTAR_ENABLE or BFS_ENABLE or DFS_ENABLE:
+        if len(path) == 0:
+            print("path not work1")
         newpath = path[::-1]
-        newpath[len(newpath):] = sk.s[1:]
-        newbody = newpath[0:(len(sk.s)+1)]
-        pathcpl = BFS(fd.getPosition(),newbody)
-        print (fd.getPosition())
-        print (pathcpl)
+        #print("new1", newpath)
+        newnewpath = []
+        for i in range(len(newpath)-1):
+            newnewpath.append(newpath[i])
+            newnewpath.append((int((newpath[i][0] + newpath[i+1][0] )/ 2), int((newpath[i][1] + newpath[i+1][1] )/ 2)))
+        newnewpath.append(newpath[-1])
+        #print("newnewpath: ", newnewpath)
+        newnewpath[len(newnewpath):] = sk.s[1:]
+        #print("new2", newnewpath)
+        newbody = newnewpath[0:(len(sk.s)+2)]
+        #print("newbody: ", newbody)
+        pathcpl = BFS(fd.getPosition(),newbody, newbody[-1])
+        #print("food: ", fd.getPosition())
+        print ("pathcpl: ", pathcpl)
+        print("newbody", newbody)
         if len(pathcpl) == 0:
-            pass
-        #return getPath()
+            print("path not work")
+            #getPath()
+            numbercount = 0
+            path = BFS(sk.s[0], sk.s, sk.s[-1])
+            istracetail = True
+            print("newpath", path)
+    #print("path: ", path)
     return path
 if BFS_ENABLE or DFS_ENABLE or ASTAR_ENABLE:
     path = getPath()
-numbercount = 0
+
 while run:
     skrect = []
     for event in pygame.event.get():
@@ -213,10 +266,36 @@ while run:
                 if sk.getDirection()!='Left':
                     key = 'Right'
     screen.fill((0,0,0))
-
+    fdrect = pygame.draw.circle(screen,(255,255,255),(fd.getPosition()[0]*10,fd.getPosition()[1]*10),5,2)
+    for block in sk.s:
+        skrect.append(pygame.draw.rect(screen,(255,255,255),(block[0]*10-5,block[1]*10-5,10,10)))
+    if istracetail == True:
+        target.append(sk.s[-1])
+        istracetail = False
+    if fdrect.colliderect(skrect[0]):
+        sk.grow(last1_tail, last2_tail)
+        while True:
+            fdposi = fd.newFood()
+            canbreak = True
+            if fdposi in sk.s:
+                canbreak = False
+            if canbreak == True:
+                if BFS_ENABLE or DFS_ENABLE or ASTAR_ENABLE:
+                    path = getPath()
+                numbercount = 0
+                break
+    if len(target) > 0:
+        if target[0] == sk.s[0]:
+            if BFS_ENABLE or DFS_ENABLE or ASTAR_ENABLE:
+                path = getPath()
+            numbercount = 0
+            target = []
+    pygame.display.update()
     numbercount = numbercount + 1
-    if clock.tick(15):
-        if BFS_ENABLE or DFS_ENABLE or ASTAR_ENABLE:
+    if clock.tick(100):
+        print("thispath: ", path)
+        print(numbercount)
+        if (BFS_ENABLE or DFS_ENABLE or ASTAR_ENABLE) and numbercount < len(path):
             if (path[numbercount][0]-path[numbercount-1][0],path[numbercount][1]-path[numbercount-1][1]) == (0,2):
                 key = 'Down'
             elif (path[numbercount][0]-path[numbercount-1][0],path[numbercount][1]-path[numbercount-1][1]) == (0,-2):
@@ -225,29 +304,15 @@ while run:
                 key = 'Left'
             elif (path[numbercount][0]-path[numbercount-1][0],path[numbercount][1]-path[numbercount-1][1]) == (2,0):
                 key = 'Right'
+        last1_tail = sk.s[-1]
+        last2_tail = sk.s[-2]
         sk.run(key)
         sk.run(key)
-    fdrect = pygame.draw.circle(screen,(255,255,255),(fd.getPosition()[0]*10,fd.getPosition()[1]*10),5,2)
-    for block in sk.s:
-        skrect.append(pygame.draw.rect(screen,(255,255,255),(block[0]*10-5,block[1]*10-5,10,10)))
-    if fdrect.colliderect(skrect[0]):
-        sk.grow()
-        while True:
-            fdposi = fd.newFood()
-            canbreak = True
-            for i in sk.s:
-                if i == fdposi:
-                    canbreak = False
-            if canbreak == True:
-                if BFS_ENABLE or DFS_ENABLE or ASTAR_ENABLE:
-                    path = getPath()
-                numbercount = 0
-                break
-    pygame.display.update()
+    
     if sk.s[0][0]*10-5 < -10 or sk.s[0][1]*10-5 < -10 or sk.s[0][0] > SCREEN_SIZE[0]/10 -1 or sk.s[0][1] > SCREEN_SIZE[1]/10 -1:
         run = False
         break
-        sys.exit()
+        #sys.exit()
     count = len(skrect) - 1
     while count > 1 and run:
         if skrect[0].colliderect(skrect[count-1]):
