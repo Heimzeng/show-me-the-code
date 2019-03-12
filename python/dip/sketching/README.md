@@ -6,8 +6,8 @@ To make a image looks like a sketch
 
 change
 
-![](https://raw.githubusercontent.com/Heimzeng/show-me-the-code/master/Images/sysu.jpg)
+![](https://raw.githubusercontent.com/Heimzeng/show-me-the-code/master/python/dip/sketching/img/sysu.jpg)
 
 to
 
-![](https://raw.githubusercontent.com/Heimzeng/show-me-the-code/master/Images/sketching.png)
+![](https://raw.githubusercontent.com/Heimzeng/show-me-the-code/master/python/dip/sketching/img/sketching.png)
