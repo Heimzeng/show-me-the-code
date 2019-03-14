@@ -1,0 +1,26 @@
+{% load staticfiles %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="zh-cn">
+{% include "blog/header.html" %}
+<body>
+	{% include "blog/sidebar.html" %}
+    <div class="content container">
+		
+		<div class="posts">
+      {% for record in record_list %}
+      <div class="post">
+        <h1 class="post-title">
+          
+            {{ record.title }}
+
+        </h1>
+
+        <span class="post-date">{{ record.date.date }}</span>
+
+        {{ record.content |safe }}
+      </div>
+      {% endfor %}
+    </div>
+</body>
+</html>

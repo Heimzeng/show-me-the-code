@@ -1,0 +1,31 @@
+{% load staticfiles %}
+{% load static %}	
+<div class="theme-base-0d">
+  <div class="sidebar">
+      <div class="container sidebar-sticky">
+        <div class="sidebar-about">
+          <img src="{% static '/blog/img/me.jpg' %}">
+          <h1>
+            <a href="{{ site.baseurl }}">
+              Heim's Daily
+            </a>
+          </h1>
+          <p class="lead">{{ site.description }}</p>
+        </div>
+
+        <nav class="sidebar-nav">
+          <a class="sidebar-nav-item{% if page.url == site.baseurl %} active{% endif %}" href="http://127.0.0.1:8000/blog">Home</a>
+
+          {% comment %}
+            The code below dynamically generates a sidebar nav of pages with
+            `layout: page` in the front-matter. See readme for usage.
+          {% endcomment %}
+
+          <a class="sidebar-nav-item" href="http://127.0.0.1:8000/about">Updates</a>
+          <a class="sidebar-nav-item" href="https://github.com/Heimzeng/">GitHub</a>
+        </nav>
+
+        <p>&copy; 2017. All rights reserved.</p>
+      </div>
+    </div>
+  </div>

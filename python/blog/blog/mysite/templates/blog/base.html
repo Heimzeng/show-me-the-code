@@ -1,0 +1,16 @@
+{% load staticfiles %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="zh-cn">
+{% include "blog/header.html" %}
+<body>
+	{% include "blog/sidebar.html" %}
+    <div class="content container">	
+		<div class="post">
+		  	<h1 class="post-title">{{ post.title | safe}}</h1>
+		  	<span class="post-date">{{ post.date.date}}</span>
+		  	{{ post.content | safe}}
+		</div>
+	</div>
+</body>
+</html>

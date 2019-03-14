@@ -1,0 +1,1 @@
+g++ producer_and_consumer.cpp -o producer_and_consumer -lpthread
