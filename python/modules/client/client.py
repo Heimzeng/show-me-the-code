@@ -13,7 +13,7 @@ def conn():
     client_socket.connect((server_host, server_port))
     while True:
         print('please login(0) or regist(1):')
-        flag = 0
+        flag = int(input())
         username = 'heim'
         password = 'zeng'
         if flag == 1:
