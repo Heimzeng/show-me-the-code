@@ -14,8 +14,10 @@ def conn():
     while True:
         print('please login(0) or regist(1):')
         flag = int(input())
-        username = 'heim'
-        password = 'zeng'
+        # username = 'heim'
+        # password = 'zeng'
+        username = input()
+        password = input()
         if flag == 1:
             password_confirmed = input('Confirm your password: ')
             if password != password_confirmed:

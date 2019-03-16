@@ -5,9 +5,13 @@ message Person {
   int32 age = 2;
   string name = 3;
   string password = 4;
+  float rotation = 5;
+  int32 direction = 6;
 }
 
 message Room {
-  int32 id = 15;
+  int32 id = 1;
   repeated Person persons = 2;
+  int32 seq = 3;
+  int32 type = 4;
 }
