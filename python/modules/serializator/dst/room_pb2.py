@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='room.proto',
   package='',
   syntax='proto3',
-  serialized_pb=_b('\n\nroom.proto\"f\n\x06Person\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x0b\n\x03\x61ge\x18\x02 \x01(\x05\x12\x0c\n\x04name\x18\x03 \x01(\t\x12\x10\n\x08password\x18\x04 \x01(\t\x12\x10\n\x08rotation\x18\x05 \x01(\x02\x12\x11\n\tdirection\x18\x06 \x01(\x05\"G\n\x04Room\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x18\n\x07persons\x18\x02 \x03(\x0b\x32\x07.Person\x12\x0b\n\x03seq\x18\x03 \x01(\x05\x12\x0c\n\x04type\x18\x04 \x01(\x05\x62\x06proto3')
+  serialized_pb=_b('\n\nroom.proto\"f\n\x06Person\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x0b\n\x03\x61ge\x18\x02 \x01(\x05\x12\x0c\n\x04name\x18\x03 \x01(\t\x12\x10\n\x08password\x18\x04 \x01(\t\x12\x10\n\x08rotation\x18\x05 \x01(\x02\x12\x11\n\tdirection\x18\x06 \x01(\x05\"l\n\x04Room\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x18\n\x07persons\x18\x02 \x03(\x0b\x32\x07.Person\x12\x0b\n\x03seq\x18\x03 \x01(\x05\x12\x0c\n\x04type\x18\x04 \x01(\x05\x12\x10\n\x08rotation\x18\x05 \x01(\x02\x12\x11\n\tdirection\x18\x06 \x01(\x05\x62\x06proto3')
 )
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
@@ -127,6 +127,20 @@ _ROOM = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
+    _descriptor.FieldDescriptor(
+      name='rotation', full_name='Room.rotation', index=4,
+      number=5, type=2, cpp_type=6, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='direction', full_name='Room.direction', index=5,
+      number=6, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
   ],
   extensions=[
   ],
@@ -140,7 +154,7 @@ _ROOM = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=118,
-  serialized_end=189,
+  serialized_end=226,
 )
 
 _ROOM.fields_by_name['persons'].message_type = _PERSON
