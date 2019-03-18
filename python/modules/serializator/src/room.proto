@@ -5,8 +5,8 @@ message Person {
   int32 age = 2;
   string name = 3;
   string password = 4;
-  float rotation = 5;
-  int32 direction = 6;
+  repeated float rotation = 5;
+  repeated int32 direction = 6;
 }
 
 message Room {

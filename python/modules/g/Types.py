@@ -9,6 +9,13 @@ class Types(Enum):
     READY = 5
     STARTGAME = 6
     REALLYSTART = 7
+    ACK = 8
+
+    GETROOM = 9
+    KEYROOM = 10
+    LOADPACKGE = 11
+    PING = 99
+
     SUCC = 200
     FAILED = 400
     NOTFOUND = 404
