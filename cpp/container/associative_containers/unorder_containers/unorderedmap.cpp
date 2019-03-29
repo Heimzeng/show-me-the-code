@@ -11,5 +11,17 @@ int main(int argc, char const *argv[])
 		elem.second *= elem.second;
 	for (const auto& elem : coll)
 		cout << elem.first << ": " << elem.second << endl;
+	
+	unordered_map<char, int> m;
+	m['c'] = 0;
+	m['b'] = 1;
+	for (const auto& elem : m)
+		cout << elem.first << ": " << elem.second << endl;
+	auto i = m.find('c');
+	if (m['c']==0)
+		cout << "==" << endl;
+	m.erase(i);
+	for (const auto& elem : m)
+		cout << elem.first << ": " << elem.second << endl;
 	return 0;
 }
